@@ -20,7 +20,7 @@ class _ReadState extends State<Read> {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('/detail.png'),
+              image: AssetImage('assets/detail.png'),
             ),
           ),
           child: Center(
@@ -59,7 +59,7 @@ class _ReadState extends State<Read> {
                     TextButton(
                       onPressed: () {},
                       child: Image(
-                        image: AssetImage('/dot.png'),
+                        image: AssetImage('assets/dot.png'),
                       ),
                     ),
                   ],

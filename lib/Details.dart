@@ -12,7 +12,7 @@ class Details extends StatelessWidget {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('/detail.png'),
+              image: AssetImage('assets/detail.png'),
             ),
           ),
           child: Center(
@@ -36,7 +36,7 @@ class Details extends StatelessWidget {
                     TextButton(
                       onPressed: () {},
                       child: Image(
-                        image: AssetImage('/rec.png'),
+                        image: AssetImage('assets/rec.png'),
                       ),
                     ),
                   ]),
@@ -71,35 +71,35 @@ class Details extends StatelessWidget {
                       child: Row(
                         children: [
                           Image.asset(
-                            '/star.png',
+                            'assets/star.png',
                             width: 10,
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           Image.asset(
-                            '/star.png',
+                            'assets/star.png',
                             width: 10,
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           Image.asset(
-                            '/star.png',
+                            'assets/star.png',
                             width: 10,
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           Image.asset(
-                            '/star.png',
+                            'assets/star.png',
                             width: 10,
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           Image.asset(
-                            '/star.png',
+                            'assets/star.png',
                             width: 10,
                           ),
                           SizedBox(

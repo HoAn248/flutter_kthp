@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
           body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('/background.png'),
+                image: AssetImage('assets/background.png'),
               ),
             ),
             child: Center(
@@ -27,7 +27,7 @@ class Home extends StatelessWidget {
                   Container(
                     width: 70,
                     child: Image(
-                      image: AssetImage('/logo.png'),
+                      image: AssetImage('assets/logo.png'),
                     ),
                   ),
                   SizedBox(

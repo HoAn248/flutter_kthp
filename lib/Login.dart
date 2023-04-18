@@ -5,13 +5,21 @@ import 'package:flutter_cuoi_ki/Genre.dart';
 import 'package:flutter_cuoi_ki/register.dart';
 import 'package:http/http.dart' as http;
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   dynamic dataUsers;
   dynamic dataBooks;
   Login(this.dataUsers, this.dataBooks);
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  var thongBao = '';
   final _email = TextEditingController();
+
   final _password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +28,7 @@ class Login extends StatelessWidget {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('/login.png'),
+              image: AssetImage('assets/login.png'),
             ),
           ),
           child: Center(
@@ -97,27 +105,29 @@ class Login extends StatelessWidget {
                 ),
                 TextButton(
                   style: ButtonStyle(),
-                  onPressed: (() {
+                  onPressed: (() async {
+                    var urlUser = Uri.parse(
+                        'https://63677e3cf5f549f052d66958.mockapi.io/users');
+                    var rsUser = await http.get(urlUser);
+                    var user = jsonDecode(utf8.decode(rsUser.bodyBytes));
                     var check = false;
-                    for (var e in dataUsers) {
+                    for (var e in user) {
                       if (_email.text.trim() == e['mail'] &&
                           _password.text.trim() == e['password']) {
                         check = true;
                       }
                     }
+
                     if (check) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => (Genre(dataBooks)),
+                            builder: (context) => (Genre(widget.dataBooks)),
                           ));
                     } else {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                (Register(dataUsers, dataBooks)),
-                          ));
+                      setState(() {
+                        thongBao = "Tài khoản hoặc mật khẩu không chính xác!";
+                      });
                     }
                   }),
                   child: Icon(
@@ -131,9 +141,9 @@ class Login extends StatelessWidget {
                 Container(
                   width: 200,
                   child: Text(
-                    'New user-Create and account and sign up for seamless Exploring:',
+                    thongBao,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.yellow,
                     ),
                   ),
                 ),
@@ -148,7 +158,7 @@ class Login extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                (Register(dataUsers, dataBooks)),
+                                (Register(widget.dataUsers, widget.dataBooks)),
                           ));
                     }),
                     // ignore: prefer_const_literals_to_create_immutables
@@ -157,7 +167,7 @@ class Login extends StatelessWidget {
                     child: Row(children: [
                       Text('Sign Up'),
                       SizedBox(
-                        width: 6,
+                        width: 5,
                       ),
                       Icon(Icons.arrow_circle_right_sharp),
                     ]),

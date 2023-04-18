@@ -13,7 +13,7 @@ class Books extends StatelessWidget {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('/fiction.png'),
+              image: AssetImage('assets/fiction.png'),
             ),
           ),
           child: Center(
@@ -50,7 +50,7 @@ class Books extends StatelessWidget {
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('/fictionSlide.png'),
+                    image: AssetImage('assets/fictionSlide.png'),
                   ),
                 ),
               ),
@@ -117,11 +117,11 @@ class Book extends StatelessWidget {
                   SizedBox(
                     height: 30,
                   ),
-                  Image.asset('/star.png', width: 20),
-                  Image.asset('/star.png', width: 20),
-                  Image.asset('/star.png', width: 20),
-                  Image.asset('/star.png', width: 20),
-                  Image.asset('/star.png', width: 20),
+                  Image.asset('assets/star.png', width: 20),
+                  Image.asset('assets/star.png', width: 20),
+                  Image.asset('assets/star.png', width: 20),
+                  Image.asset('assets/star.png', width: 20),
+                  Image.asset('assets/star.png', width: 20),
                 ],
               ),
               Container(

@@ -24,7 +24,7 @@ class Genre extends StatelessWidget {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('/genre.png'),
+              image: AssetImage('assets/genre.png'),
             ),
           ),
           child: Center(

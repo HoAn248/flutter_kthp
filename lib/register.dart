@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_cuoi_ki/Genre.dart';
 import 'package:http/http.dart' as http;
@@ -9,15 +11,28 @@ import 'package:flutter_cuoi_ki/Login.dart';
 //   runApp(Home());
 // }
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
   dynamic dataUsers;
   dynamic dataBooks;
-  final _name = TextEditingController();
-  final _email = TextEditingController();
-  final _age = TextEditingController();
-  final _password = TextEditingController();
-  final _confirmPass = TextEditingController();
+
   Register(this.dataUsers, this.dataBooks);
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  var thongBao = '';
+
+  final _name = TextEditingController();
+
+  final _email = TextEditingController();
+
+  final _age = TextEditingController();
+
+  final _password = TextEditingController();
+
+  final _confirmPass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +42,7 @@ class Register extends StatelessWidget {
           body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('/background1.png'),
+                image: AssetImage('assets/background1.png'),
               ),
             ),
             child: Center(
@@ -171,19 +186,23 @@ class Register extends StatelessWidget {
                   TextButton(
                     style: ButtonStyle(),
                     onPressed: () async {
+                      var urlUser = Uri.parse(
+                          'https://63677e3cf5f549f052d66958.mockapi.io/users');
+                      var rsUser = await http.get(urlUser);
+                      var users = jsonDecode(utf8.decode(rsUser.bodyBytes));
                       var checkName = _name.text.trim().length >= 6 &&
                               _name.text.trim().length <= 20
                           ? true
                           : false;
                       var checkMail = true;
-                      for (var e in dataUsers) {
+                      for (var e in users) {
                         if (e['mail'] == _email.text.trim()) {
                           checkMail = false;
                         }
                       }
 
                       var checkPassword = _password.text.trim().length >= 6 &&
-                              _name.text.trim().length <= 20
+                              _password.text.trim().length <= 20
                           ? true
                           : false;
 
@@ -206,10 +225,16 @@ class Register extends StatelessWidget {
                           "password": _password.text.trim()
                         });
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => (Genre(dataBooks)),
-                            ));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => (Genre(widget.dataBooks)),
+                          ),
+                        );
+                      } else {
+                        setState(() {
+                          thongBao =
+                              'Đăng kí không thành công, vui lòng nhập đúng các trường';
+                        });
                       }
                     },
                     child: Icon(
@@ -220,9 +245,13 @@ class Register extends StatelessWidget {
                   SizedBox(
                     height: 30,
                   ),
-                  Text(
-                    'Already Registerd ?',
-                    style: TextStyle(color: Colors.white),
+                  Container(
+                    width: 250,
+                    child: Text(
+                      thongBao,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.yellow),
+                    ),
                   ),
                   SizedBox(
                     height: 30,
@@ -232,7 +261,8 @@ class Register extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => (Login(dataUsers, dataBooks)),
+                            builder: (context) =>
+                                (Login(widget.dataUsers, widget.dataBooks)),
                           ));
                     }),
                     child: Text('Sign In'),

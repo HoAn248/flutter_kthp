@@ -33,6 +33,7 @@ class _RegisterState extends State<Register> {
   final _password = TextEditingController();
 
   final _confirmPass = TextEditingController();
+  TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -216,25 +217,30 @@ class _RegisterState extends State<Register> {
                       if (!checkPasswordConfirm) {
                         setState(() {
                           thongBao = 'Password nhập lại không chính xác';
+                          _controller.text = thongBao;
                         });
                       } else if (!checkMail) {
                         setState(() {
                           thongBao =
                               'Email này đã được đăng ký ở một tài khoản khác';
+                          _controller.text = thongBao;
                         });
                       } else if (!checkPassword) {
                         setState(() {
                           thongBao =
                               'Chiều dài password không hợp lệ, vui lòng nhập từ 6 đến 20 kí tự';
+                          _controller.text = thongBao;
                         });
                       } else if (!checkName) {
                         setState(() {
                           thongBao =
                               'Chiều dài tên không hợp lệ, vui lòng nhập từ 6 đến 20 kí tự';
+                          _controller.text = thongBao;
                         });
                       } else {
                         setState(() {
                           thongBao = 'Đăng kí thành công';
+                          _controller.text = thongBao;
                         });
                         var url = Uri.parse(
                             'https://63677e3cf5f549f052d66958.mockapi.io/users');
@@ -280,11 +286,19 @@ class _RegisterState extends State<Register> {
                     height: 30,
                   ),
                   Container(
-                    width: 250,
-                    child: Text(
-                      thongBao,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.yellow),
+                    width: 200,
+                    child: TextFormField(
+                      readOnly: true,
+                      maxLines: null,
+                      textAlignVertical: TextAlignVertical.top,
+                      textAlign: TextAlign.left,
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      style: TextStyle(
+                        color: Colors.yellow,
+                      ),
                     ),
                   ),
                   SizedBox(

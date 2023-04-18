@@ -19,6 +19,7 @@ class _LoginState extends State<Login> {
   final _email = TextEditingController();
 
   final _password = TextEditingController();
+  TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -124,22 +125,27 @@ class _LoginState extends State<Login> {
                     if (_email.text.trim() == '') {
                       setState(() {
                         thongBao = "Email không được bỏ trống";
+                        _controller.text = thongBao;
                       });
                     } else if (_password.text.trim() == '') {
                       setState(() {
                         thongBao = "Mật khẩu không được bỏ trống";
+                        _controller.text = thongBao;
                       });
                     } else if (!checkEmail) {
                       setState(() {
                         thongBao = "Email không chính xác!";
+                        _controller.text = thongBao;
                       });
                     } else if (!checkPassword) {
                       setState(() {
                         thongBao = "Mật khẩu không chính xác!";
+                        _controller.text = thongBao;
                       });
                     } else {
                       setState(() {
                         thongBao = "Đăng nhập thành công";
+                        _controller.text = thongBao;
                       });
                       Navigator.push(
                           context,
@@ -158,12 +164,26 @@ class _LoginState extends State<Login> {
                 ),
                 Container(
                   width: 200,
-                  child: Text(
-                    thongBao,
+                  child: TextFormField(
+                    maxLines: null,
+                    textAlignVertical: TextAlignVertical.top,
+                    textAlign: TextAlign.left,
+                    controller: _controller,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                    ),
                     style: TextStyle(
                       color: Colors.yellow,
                     ),
                   ),
+                  // child: Text(
+                  //   style: TextStyle(
+                  //     color: Colors.yellow,
+                  //   ),
+                  //   thongBao,
+                  //   semanticsLabel: 'myText',
+                  // ),
                 ),
                 SizedBox(
                   height: 30,

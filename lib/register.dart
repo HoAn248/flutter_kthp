@@ -120,6 +120,7 @@ class _RegisterState extends State<Register> {
                     ),
                     child: TextFormField(
                       controller: _age,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Age:',
@@ -144,6 +145,7 @@ class _RegisterState extends State<Register> {
                     ),
                     child: TextFormField(
                       controller: _password,
+                      obscureText: true,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Password:',
@@ -168,6 +170,7 @@ class _RegisterState extends State<Register> {
                     ),
                     child: TextFormField(
                       controller: _confirmPass,
+                      obscureText: true,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Confirm Password:',
@@ -210,32 +213,63 @@ class _RegisterState extends State<Register> {
                           _confirmPass.text.trim() == _password.text.trim()
                               ? true
                               : false;
-
-                      if (checkName &&
-                          checkMail &&
-                          checkPassword &&
-                          checkPasswordConfirm) {
+                      if (!checkPasswordConfirm) {
+                        setState(() {
+                          thongBao = 'Password nhập lại không chính xác';
+                        });
+                      } else if (!checkMail) {
+                        setState(() {
+                          thongBao =
+                              'Email này đã được đăng ký ở một tài khoản khác';
+                        });
+                      } else if (!checkPassword) {
+                        setState(() {
+                          thongBao =
+                              'Chiều dài password không hợp lệ, vui lòng nhập từ 6 đến 20 kí tự';
+                        });
+                      } else if (!checkName) {
+                        setState(() {
+                          thongBao =
+                              'Chiều dài tên không hợp lệ, vui lòng nhập từ 6 đến 20 kí tự';
+                        });
+                      } else {
+                        setState(() {
+                          thongBao = 'Đăng kí thành công';
+                        });
                         var url = Uri.parse(
                             'https://63677e3cf5f549f052d66958.mockapi.io/users');
-
                         await http.post(url, body: {
                           "name": _name.text.trim(),
                           "mail": _email.text.trim(),
                           "age": _age.text.trim(),
                           "password": _password.text.trim()
                         });
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => (Genre(widget.dataBooks)),
-                          ),
-                        );
-                      } else {
-                        setState(() {
-                          thongBao =
-                              'Đăng kí không thành công, vui lòng nhập đúng các trường';
-                        });
                       }
+                      // if (checkName &&
+                      //     checkMail &&
+                      //     checkPassword &&
+                      //     checkPasswordConfirm) {
+                      //   var url = Uri.parse(
+                      //       'https://63677e3cf5f549f052d66958.mockapi.io/users');
+
+                      //   await http.post(url, body: {
+                      //     "name": _name.text.trim(),
+                      //     "mail": _email.text.trim(),
+                      //     "age": _age.text.trim(),
+                      //     "password": _password.text.trim()
+                      //   });
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => (Genre(widget.dataBooks)),
+                      //     ),
+                      //   );
+                      // } else {
+                      //   setState(() {
+                      //     thongBao =
+                      //         'Đăng kí không thành công, vui lòng nhập đúng các trường';
+                      //   });
+                      // }
                     },
                     child: Icon(
                       Icons.arrow_circle_right_sharp,

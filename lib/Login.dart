@@ -85,6 +85,7 @@ class _LoginState extends State<Login> {
                   ),
                   child: TextFormField(
                     controller: _password,
+                    obscureText: true,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Password:',
@@ -110,24 +111,41 @@ class _LoginState extends State<Login> {
                         'https://63677e3cf5f549f052d66958.mockapi.io/users');
                     var rsUser = await http.get(urlUser);
                     var user = jsonDecode(utf8.decode(rsUser.bodyBytes));
-                    var check = false;
+                    var checkEmail = false;
+                    var checkPassword = false;
                     for (var e in user) {
-                      if (_email.text.trim() == e['mail'] &&
-                          _password.text.trim() == e['password']) {
-                        check = true;
+                      if (_email.text.trim() == e['mail']) {
+                        checkEmail = true;
+                      }
+                      if (_password.text.trim() == e['password']) {
+                        checkPassword = true;
                       }
                     }
-
-                    if (check) {
+                    if (_email.text.trim() == '') {
+                      setState(() {
+                        thongBao = "Email không được bỏ trống";
+                      });
+                    } else if (_password.text.trim() == '') {
+                      setState(() {
+                        thongBao = "Mật khẩu không được bỏ trống";
+                      });
+                    } else if (!checkEmail) {
+                      setState(() {
+                        thongBao = "Email không chính xác!";
+                      });
+                    } else if (!checkPassword) {
+                      setState(() {
+                        thongBao = "Mật khẩu không chính xác!";
+                      });
+                    } else {
+                      setState(() {
+                        thongBao = "Đăng nhập thành công";
+                      });
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => (Genre(widget.dataBooks)),
                           ));
-                    } else {
-                      setState(() {
-                        thongBao = "Tài khoản hoặc mật khẩu không chính xác!";
-                      });
                     }
                   }),
                   child: Icon(
